@@ -98,7 +98,7 @@ var checkStatusDashboardResponse = function(response, serviceDefinition, service
 var checkHttpValueResponse = function(response, serviceDefinition, service) {
   if (response.statusCode == 200 && (serviceDefinition.checkFixedValueResponse || serviceDefinition.checkRangeValuesResponse)) {
     response.on('data', function (chunk) {
-      var value = ('' + chunk).substring(0, chunk.length - 1);
+      var value = ('' + chunk).replace(/^(?:s*)([Ss]*?)(?:s*)$/,"$1");
       if (serviceDefinition.checkFixedValueResponse) {
         if (serviceDefinition.checkFixedValueResponse[value]) {
           service.status = serviceDefinition.checkFixedValueResponse[value];
